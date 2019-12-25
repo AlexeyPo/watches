@@ -3,19 +3,19 @@ package model;
 public class Customer {
     private int id;
     private String name;
-    private double sum;
+    private double totalSum;
     private int cardNumber;
 
-    public Customer(int id, String name, double sum, int cardNumber) {
+    public Customer(int id, String name, double totalSum, int cardNumber) {
         this.id = id;
         this.name = name;
-        this.sum = sum;
+        this.totalSum = totalSum;
         this.cardNumber = cardNumber;
     }
 
-    public Customer(String name, double sum, int cardNumber) {
+    public Customer(String name, double totalSum, int cardNumber) {
         this.name = name;
-        this.sum = sum;
+        this.totalSum = totalSum;
         this.cardNumber = cardNumber;
     }
 
@@ -35,12 +35,12 @@ public class Customer {
         this.name = name;
     }
 
-    public double getSum() {
-        return sum;
+    public double getTotalSum() {
+        return totalSum;
     }
 
-    public void setSum(double sum) {
-        this.sum = sum;
+    public void setTotalSum(double totalSum) {
+        this.totalSum = totalSum;
     }
 
     public int getCardNumber() {
@@ -56,7 +56,7 @@ public class Customer {
         return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", sum=" + sum +
+                ", sum=" + totalSum +
                 ", cardNumber=" + cardNumber +
                 '}';
     }

@@ -16,9 +16,9 @@ public class CustomerDAO {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                double sum = resultSet.getDouble("sum");
-                int cardNumber = resultSet.getInt("cardNumber");
-                customers.add(new Customer(id, name, sum, cardNumber));
+                double totalSum = resultSet.getDouble("total_sum");
+                int cardNumber = resultSet.getInt("card_number");
+                customers.add(new Customer(id, name, totalSum, cardNumber));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,9 +28,9 @@ public class CustomerDAO {
 
     public void addNewCustomer(Customer customer) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/watch", "postgres", "postgres")) {
-            PreparedStatement statement = connection.prepareStatement("insert into watch.customer(name, sum, cardNumber) VALUES (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("insert into watch.customer(name, total_sum, card_number) VALUES (?, ?, ?)");
             statement.setString(1, customer.getName());
-            statement.setDouble(2, customer.getSum());
+            statement.setDouble(2, customer.getTotalSum());
             statement.setInt(3, customer.getCardNumber());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class CustomerDAO {
 
     public void editCustomer(String name, double sum, double cardNumber, int id) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/watch", "postgres", "postgres")) {
-            PreparedStatement statement = connection.prepareStatement("update watch.customer set name = ?, sum = ?, cardnumber = ? where id = ?");
+            PreparedStatement statement = connection.prepareStatement("update watch.customer set name = ?, total_sum = ?, card_number = ? where id = ?");
             statement.setString(1, name);
             statement.setDouble(2, sum);
             statement.setDouble(3, cardNumber);
