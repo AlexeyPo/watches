@@ -18,6 +18,14 @@ public class Item {
         this.watchType = watchType;
     }
 
+    public Item(String model, double price, int quantity, Trademark trademark, WatchType watchType) {
+        this.model = model;
+        this.price = price;
+        this.quantity = quantity;
+        this.trademark = trademark;
+        this.watchType = watchType;
+    }
+
     public int getId() {
         return id;
     }

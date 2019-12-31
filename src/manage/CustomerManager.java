@@ -27,7 +27,11 @@ public class CustomerManager {
         double sum = scanner.nextDouble();
         System.out.println("Please, enter new Customer's card number: ");
         int cardNumber = scanner.nextInt();
-        customerDAO.addNewCustomer(new Customer(name, sum, cardNumber));
+        customerDAO.addNewCustomer(new Customer.Builder()
+                .withName(name)
+                .withTotalSum(sum)
+                .withCardNumber(cardNumber)
+                .build());
         showCustomers();
     }
 
@@ -40,7 +44,6 @@ public class CustomerManager {
         double sum = scanner.nextDouble();
         System.out.println("Please, enter Customer's new card number: ");
         double cardNumber = scanner.nextDouble();
-
         customerDAO.editCustomer(name, sum, cardNumber, id);
         showCustomers();
     }

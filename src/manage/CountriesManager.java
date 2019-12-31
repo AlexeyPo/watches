@@ -4,6 +4,7 @@ import dao.CountryDAO;
 import model.Country;
 
 public class CountriesManager {
+
     CountryDAO countryDAO = new CountryDAO();
 
     public void showCountries() {

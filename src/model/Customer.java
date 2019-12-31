@@ -7,21 +7,52 @@ public class Customer {
     private double personalDiscount;
     private int cardNumber;
 
-    public Customer(int id, String name, double totalSum, double personalDiscount, int cardNumber) {
-        this.id = id;
-        this.name = name;
-        this.totalSum = totalSum;
-        this.personalDiscount = personalDiscount;
-        this.cardNumber = cardNumber;
+    private Customer(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.totalSum = builder.totalSum;
+        this.personalDiscount = builder.personalDiscount;
+        this.cardNumber = builder.cardNumber;
     }
 
-    public Customer(String name, double totalSum, int cardNumber) {
-        this.name = name;
-        this.totalSum = totalSum;
-        this.cardNumber = cardNumber;
+    public static class Builder {
+        private int id;
+        private String name;
+        private double totalSum;
+        private double personalDiscount;
+        private int cardNumber;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withTotalSum(double totalSum) {
+            this.totalSum = totalSum;
+            return this;
+        }
+
+        public Builder withPersonalDiscount(double personalDiscount) {
+            this.personalDiscount = personalDiscount;
+            return this;
+        }
+
+        public Builder withCardNumber(int cardNumber) {
+            this.cardNumber = cardNumber;
+            return this;
+        }
+
+        public Customer build() {
+            return new Customer(this);
+        }
     }
 
-    public int getId() {
+   public int getId() {
         return id;
     }
 

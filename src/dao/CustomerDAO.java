@@ -19,7 +19,13 @@ public class CustomerDAO {
                 double totalSum = resultSet.getDouble("total_sum");
                 int cardNumber = resultSet.getInt("card_number");
                 double personalDiscount = resultSet.getDouble("personal_discount");
-                customers.add(new Customer(id, name, totalSum, personalDiscount, cardNumber));
+                customers.add(new Customer.Builder()
+                        .withId(id)
+                        .withName(name)
+                        .withTotalSum(totalSum)
+                        .withCardNumber(cardNumber)
+                        .withPersonalDiscount(personalDiscount)
+                        .build());
             }
         } catch (SQLException e) {
             e.printStackTrace();
