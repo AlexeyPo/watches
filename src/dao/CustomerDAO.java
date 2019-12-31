@@ -18,7 +18,8 @@ public class CustomerDAO {
                 String name = resultSet.getString("name");
                 double totalSum = resultSet.getDouble("total_sum");
                 int cardNumber = resultSet.getInt("card_number");
-                customers.add(new Customer(id, name, totalSum, cardNumber));
+                double personalDiscount = resultSet.getDouble("personal_discount");
+                customers.add(new Customer(id, name, totalSum, personalDiscount, cardNumber));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,10 +29,11 @@ public class CustomerDAO {
 
     public void addNewCustomer(Customer customer) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/watch", "postgres", "postgres")) {
-            PreparedStatement statement = connection.prepareStatement("insert into watch.customer(name, total_sum, card_number) VALUES (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("insert into watch.customer(name, total_sum, card_number, personal_discount) VALUES (?, ?, ?, ?)");
             statement.setString(1, customer.getName());
             statement.setDouble(2, customer.getTotalSum());
             statement.setInt(3, customer.getCardNumber());
+            statement.setDouble(4, customer.getPersonalDiscount());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

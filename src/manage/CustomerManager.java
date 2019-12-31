@@ -13,8 +13,8 @@ public class CustomerManager {
     public void showCustomers() {
         System.out.println("-------- Customers --------------");
         for (Customer customer : customerDAO.findListOfCustomers()) {
-            System.out.printf("id: %d || Second Name: %8s || total sum: %5.2f || card ID: %d\n", customer.getId(),
-                    customer.getName(), customer.getTotalSum(), customer.getCardNumber());
+            System.out.printf("id: %d || Second Name: %8s || total sum: %5.2f || personal discount %2.2f %% || card ID: %d\n", customer.getId(),
+                    customer.getName(), customer.getTotalSum(), customer.getPersonalDiscount(), customer.getCardNumber());
         }
         System.out.println("---------------------------------");
     }
@@ -27,7 +27,6 @@ public class CustomerManager {
         double sum = scanner.nextDouble();
         System.out.println("Please, enter new Customer's card number: ");
         int cardNumber = scanner.nextInt();
-
         customerDAO.addNewCustomer(new Customer(name, sum, cardNumber));
         showCustomers();
     }

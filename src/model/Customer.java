@@ -4,12 +4,14 @@ public class Customer {
     private int id;
     private String name;
     private double totalSum;
+    private double personalDiscount;
     private int cardNumber;
 
-    public Customer(int id, String name, double totalSum, int cardNumber) {
+    public Customer(int id, String name, double totalSum, double personalDiscount, int cardNumber) {
         this.id = id;
         this.name = name;
         this.totalSum = totalSum;
+        this.personalDiscount = personalDiscount;
         this.cardNumber = cardNumber;
     }
 
@@ -43,6 +45,14 @@ public class Customer {
         this.totalSum = totalSum;
     }
 
+    public double getPersonalDiscount() {
+        return personalDiscount;
+    }
+
+    public void setPersonalDiscount(double personalDiscount) {
+        this.personalDiscount = personalDiscount;
+    }
+
     public int getCardNumber() {
         return cardNumber;
     }
@@ -56,7 +66,8 @@ public class Customer {
         return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", sum=" + totalSum +
+                ", totalSum=" + totalSum +
+                ", personalDiscount=" + personalDiscount +
                 ", cardNumber=" + cardNumber +
                 '}';
     }
