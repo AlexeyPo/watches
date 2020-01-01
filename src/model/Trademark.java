@@ -11,6 +11,10 @@ public class Trademark {
         this.vendor = vendor;
     }
 
+    public Trademark(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }
@@ -33,5 +37,10 @@ public class Trademark {
 
     public void setVendor(Vendor vendor) {
         this.vendor = vendor;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

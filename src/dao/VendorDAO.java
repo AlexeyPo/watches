@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VendorDAO {
+    static final String URL = "jdbc:postgresql://localhost:5432/watch";
+    static final String USER = "postgres";
+    static final String PASSWORD = "postgres";
+
     public List<Vendor> showListOfVendors() {
         List<Vendor> vendors = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/watch", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from watch.vendor");
             while (resultSet.next()) {

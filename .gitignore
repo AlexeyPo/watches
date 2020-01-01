@@ -1,4 +1,4 @@
 /out/
 .idea
 *.uml
-text.txt
+src/text.txt
