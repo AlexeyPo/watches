@@ -10,7 +10,7 @@ import static dao.VendorDAO.*;
 
 public class CountryDAO {
 
-    public List<Country> findListOfCountries() {
+    public List<Country> showListOfCountries() {
         List<Country> countries = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();

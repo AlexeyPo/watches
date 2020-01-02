@@ -9,9 +9,13 @@ public class CountriesManager {
 
     public void showCountries() {
         System.out.println("-------- Countries --------------");
-        for (Country country : countryDAO.findListOfCountries()) {
+        for (Country country : countryDAO.showListOfCountries()) {
             System.out.println(country.getId() + " " + country.getName());
         }
         System.out.println("---------------------------------");
+    }
+
+    public void addNewCountry() {
+
     }
 }

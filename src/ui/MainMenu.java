@@ -11,6 +11,10 @@ public class MainMenu implements AppMenu {
     public static final int ORDERS = 5;
     public static final int REPORTS = 6;
 
+    public static final int ADD_NEW = 1;
+    public static final int EDIT = 2;
+    public static final int DELETE = 3;
+
     private CountriesManager countriesManager = new CountriesManager();
     private CustomerManager customerManager = new CustomerManager();
     private VendorsManager vendorsManager = new VendorsManager();

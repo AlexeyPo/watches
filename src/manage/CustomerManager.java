@@ -12,9 +12,10 @@ public class CustomerManager {
 
     public void showCustomers() {
         System.out.println("-------- Customers --------------");
-        for (Customer customer : customerDAO.findListOfCustomers()) {
-            System.out.printf("id: %d || Second Name: %8s || total sum: %5.2f || personal discount %2.2f %% || card ID: %d\n", customer.getId(),
-                    customer.getName(), customer.getTotalSum(), customer.getPersonalDiscount(), customer.getCardNumber());
+        System.out.printf("%2s || %11s || %9s || %17s || %s\n", "id", "Second Name", "total sum", "personal discount", "card ID");
+        for (Customer customer : customerDAO.showListOfCustomers()) {
+            System.out.printf("%2d || %11s || %9.2f || %15.2f %% || %d\n", customer.getId(), customer.getName(),
+                    customer.getTotalSum(), customer.getPersonalDiscount(), customer.getCardNumber());
         }
         System.out.println("---------------------------------");
     }
@@ -53,6 +54,5 @@ public class CustomerManager {
         int id = scanner.nextInt();
         customerDAO.deleteCustomer(id);
         showCustomers();
-        scanner.close();
     }
 }

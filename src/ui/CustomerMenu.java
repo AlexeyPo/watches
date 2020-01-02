@@ -2,11 +2,9 @@ package ui;
 
 import manage.CustomerManager;
 
-public class CustomerMenu implements AppMenu {
+import static ui.MainMenu.*;
 
-    public static final int ADD_NEW_CUSTOMER = 1;
-    public static final int EDIT_CUSTOMER = 2;
-    public static final int DELETE_CUSTOMER = 3;
+public class CustomerMenu implements AppMenu {
 
     private CustomerManager customerManager = new CustomerManager();
 
@@ -23,13 +21,13 @@ public class CustomerMenu implements AppMenu {
     @Override
     public void returnPointMenu(int selection) {
         switch (selection) {
-            case ADD_NEW_CUSTOMER:
+            case ADD_NEW:
                 customerManager.addNewCustomer();
                 break;
-            case EDIT_CUSTOMER:
+            case EDIT:
                 customerManager.editCustomer();
                 break;
-            case DELETE_CUSTOMER:
+            case DELETE:
                 customerManager.deleteCustomer();
                 break;
         }

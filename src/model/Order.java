@@ -66,4 +66,16 @@ public class Order {
     public void setQuantityInOrder(int quantityInOrder) {
         this.quantityInOrder = quantityInOrder;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
+                ", totalAmount=" + totalAmount +
+                ", customer=" + customer +
+                ", item=" + item +
+                ", quantityInOrder=" + quantityInOrder +
+                '}';
+    }
 }

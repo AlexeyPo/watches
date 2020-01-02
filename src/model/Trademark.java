@@ -11,6 +11,10 @@ public class Trademark {
         this.vendor = vendor;
     }
 
+    public Trademark(int id) {
+        this.id = id;
+    }
+
     public Trademark(String title) {
         this.title = title;
     }

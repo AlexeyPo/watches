@@ -13,6 +13,10 @@ public class WatchType {
         this.title=title;
     }
 
+    public WatchType(int id) {
+        this.id=id;
+    }
+
     public int getId() {
         return id;
     }

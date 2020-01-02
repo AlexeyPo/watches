@@ -10,7 +10,7 @@ import static dao.VendorDAO.*;
 
 public class CustomerDAO {
 
-    public List<Customer> findListOfCustomers() {
+    public List<Customer> showListOfCustomers() {
         List<Customer> customers = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
