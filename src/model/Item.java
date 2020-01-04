@@ -26,6 +26,11 @@ public class Item {
         this.watchType = watchType;
     }
 
+    public Item(String model, double price) {
+        this.model = model;
+        this.price = price;
+    }
+
     public int getId() {
         return id;
     }
@@ -72,5 +77,17 @@ public class Item {
 
     public void setWatchType(WatchType watchType) {
         this.watchType = watchType;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", trademark=" + trademark +
+                ", watchType=" + watchType +
+                '}';
     }
 }

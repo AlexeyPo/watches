@@ -14,7 +14,7 @@ public class CountryDAO {
         List<Country> countries = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from watch.country");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM watch.country");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");

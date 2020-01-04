@@ -7,6 +7,7 @@ import static ui.MainMenu.*;
 public class OrderMenu implements AppMenu {
 
     private OrdersManager ordersManager = new OrdersManager();
+
     @Override
     public void printMenu() {
         System.out.println("========= Order Menu =========");

@@ -26,25 +26,38 @@ public class ItemsManager {
 
         System.out.println("Please, enter watch model: ");
         String model = scanner.next();
-        System.out.println("Please, enter price: ");
-        double price = scanner.nextDouble();
-        System.out.println("Please, enter quantity of watch available in warehouse: ");
-        int quantity = scanner.nextInt();
-        System.out.println("Please, enter trademark ID: ");
-        int trademark = scanner.nextInt();
-        System.out.println("Please, enter watchType ID: ");
-        int watchType = scanner.nextInt();
-        itemDAO.addNewItem(new Item(model, price, quantity, new Trademark(trademark), new WatchType(watchType)));
-        showItems();
+
+        if (!itemDAO.itemIsAvailable(model)) {
+            System.out.println("Please, enter price: ");
+            double price = scanner.nextDouble();
+
+            System.out.println("Please, enter quantity of watch available in warehouse: ");
+            int quantity = scanner.nextInt();
+
+            System.out.println("Please, enter trademark ID: ");
+            int trademark = scanner.nextInt();
+
+            System.out.println("Please, enter watchType ID: ");
+            int watchType = scanner.nextInt();
+
+            itemDAO.addNewItem(new Item(model, price, quantity, new Trademark(trademark), new WatchType(watchType)));
+            showItems();
+            System.out.println("The item was successfully updated");
+        } else {
+            showItems();
+            System.out.println("Such model already exist");
+        }
+
     }
 
     public void editItem() {
         System.out.println("Please, enter Item's model for changing: ");
         String model = scanner.next();
 
-        if (itemDAO.findItem(model)) {
+        if (itemDAO.itemIsAvailable(model)) {
             System.out.println("Please, enter Item's new Watch Type ID: ");
             int watchType = scanner.nextInt();
+
             System.out.println("Please, enter Item's new price: ");
             double price = scanner.nextDouble();
 

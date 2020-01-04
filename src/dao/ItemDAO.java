@@ -16,9 +16,9 @@ public class ItemDAO {
         List<Item> items = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select item.*, trademark.title as trademark_title, " +
-                    "watch_type.title as type_title from watch.item cross join watch.trademark cross join watch.watch_type " +
-                    "where trademark_id=trademark.id and watch_type_id=watch_type.id");
+            ResultSet resultSet = statement.executeQuery("SELECT item.*, trademark.title AS trademark_title, " +
+                    "watch_type.title AS type_title FROM watch.item CROSS JOIN watch.trademark CROSS JOIN watch.watch_type " +
+                    "WHERE trademark_id=trademark.id AND watch_type_id=watch_type.id");
             while (resultSet.next()) {
                 String model = resultSet.getString("model");
                 double price = resultSet.getDouble("price");
@@ -35,7 +35,7 @@ public class ItemDAO {
 
     public void addNewItem(Item item) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement("insert into watch.item(model, price, quantity, " +
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO watch.item(model, price, quantity, " +
                     "trademark_id, watch_type_id) VALUES (?, ?, ?, ?, ?)");
             statement.setString(1, item.getModel());
             statement.setDouble(2, item.getPrice());
@@ -51,7 +51,8 @@ public class ItemDAO {
 
     public void editItem(String model, int watchType, double price) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement("update watch.item set watch_type_id = ?, price = ? where model = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE watch.item SET watch_type_id = ?, " +
+                    "price = ? WHERE model = ?");
             statement.setInt(1, watchType);
             statement.setDouble(2, price);
             statement.setString(3, model);
@@ -61,7 +62,7 @@ public class ItemDAO {
         }
     }
 
-    public boolean findItem(String model){
+    public boolean itemIsAvailable(String model){
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement("SELECT id FROM watch.item WHERE model=?");
             statement.setString(1, model);

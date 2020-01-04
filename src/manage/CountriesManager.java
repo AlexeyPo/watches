@@ -14,8 +14,4 @@ public class CountriesManager {
         }
         System.out.println("---------------------------------");
     }
-
-    public void addNewCountry() {
-
-    }
 }

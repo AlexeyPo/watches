@@ -15,7 +15,7 @@ public class VendorDAO {
         List<Vendor> vendors = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from watch.vendor");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM watch.vendor");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String title = resultSet.getString("title");
