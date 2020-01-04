@@ -27,6 +27,7 @@ public class ItemDAO {
                 String watchType = resultSet.getString("type_title");
                 items.add(new Item(model, price, quantity, new Trademark(trademark), new WatchType(watchType)));
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,6 +44,7 @@ public class ItemDAO {
             statement.setObject(4, item.getTrademark());
             statement.setObject(5, item.getWatchType());
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,6 +59,7 @@ public class ItemDAO {
             statement.setDouble(2, price);
             statement.setString(3, model);
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,10 +72,12 @@ public class ItemDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
                 resultSet.getInt("id");
+                statement.close();
                 return true;
             }else {
                 return false;
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

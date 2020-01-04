@@ -84,4 +84,12 @@ public class CustomerManager {
             System.out.println("The customer with such ID was not found!!! Please, check and try again!");
         }
     }
+
+    public void checkCustomerDiscount(int cardNumber) {
+        customerDAO.checkCustomerDiscount(cardNumber);
+    }
+
+    public void updateCustomerTotalAmount() {
+        customerDAO.updateCustomerTotalAmount();
+    }
 }

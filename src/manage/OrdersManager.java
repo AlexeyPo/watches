@@ -1,11 +1,19 @@
 package manage;
 
+import dao.CustomerDAO;
+import dao.ItemDAO;
 import dao.OrderDAO;
 import model.Order;
+
+import java.util.Scanner;
 
 public class OrdersManager {
 
     OrderDAO orderDAO = new OrderDAO();
+    CustomerDAO customerDAO = new CustomerDAO();
+    ItemDAO itemDAO = new ItemDAO();
+    CustomerManager customerManager = new CustomerManager();
+    Scanner scanner = new Scanner(System.in);
 
     public void showOrders() {
         System.out.println("---------------------------------------- Orders -----------------------------------------");
@@ -24,6 +32,28 @@ public class OrdersManager {
     }
 
     public void addNewOrder() {
+        System.out.println("Please, enter new Customer's card number: ");
+        int cardNumber = scanner.nextInt();
 
+        if (customerDAO.customerIsAvailable(cardNumber)) {
+            customerManager.checkCustomerDiscount(cardNumber);
+
+            System.out.println("Please, enter the chosen model for adding to order: ");
+            String model = scanner.next();
+
+            if (itemDAO.itemIsAvailable(model)) {
+                System.out.println("Please, enter quantity for adding to order: ");
+                int quantityInOrder = scanner.nextInt();
+
+                orderDAO.addNewOrder(cardNumber, model, quantityInOrder);
+                customerManager.updateCustomerTotalAmount();
+                showOrders();
+            } else {
+                System.out.println("Such model was not fount");
+            }
+        } else {
+            showOrders();
+            System.out.println("The customer with such card number was not found!!! Please, check and try again!");
+        }
     }
 }

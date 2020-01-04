@@ -29,6 +29,7 @@ public class CustomerDAO {
                         .withPersonalDiscount(personalDiscount)
                         .build());
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,6 +45,7 @@ public class CustomerDAO {
             statement.setInt(3, customer.getCardNumber());
             statement.setDouble(4, customer.getPersonalDiscount());
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,6 +60,7 @@ public class CustomerDAO {
             statement.setDouble(3, cardNumber);
             statement.setInt(4, id);
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,6 +71,7 @@ public class CustomerDAO {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM watch.customer WHERE id = ?");
             statement.setInt(1, id);
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,12 +79,13 @@ public class CustomerDAO {
 
     public boolean customerIsAvailable(int cardNumber) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement("SELECT id FROM watch.customer " +
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM watch.customer " +
                     "WHERE card_number = ?");
             statement.setInt(1, cardNumber);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                resultSet.getInt("id");
+                resultSet.getInt("card_number");
+                statement.close();
                 return true;
             } else return false;
         } catch (SQLException e) {
@@ -97,11 +102,67 @@ public class CustomerDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 resultSet.getInt("id");
+                statement.close();
                 return true;
             } else return false;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void checkCustomerDiscount(int cardNumber) {
+        int totalSum = 0;
+        int discount = 0;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT total_sum FROM watch.customer " +
+                    "WHERE card_number = ?");
+            statement.setInt(1, cardNumber);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                totalSum = resultSet.getInt("total_sum");
+            }
+
+            if (totalSum >= 5000 && totalSum < 10000) {
+                discount = 2;
+            } else if (totalSum >= 10000 && totalSum < 30000) {
+                discount = 5;
+            } else if (totalSum >= 30000) {
+                discount = 10;
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE watch.customer " +
+                    "SET personal_discount = ? WHERE card_number = ?");
+            preparedStatement.setInt(1, discount);
+            preparedStatement.setInt(2, cardNumber);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCustomerTotalAmount() {
+        double amount = 0;
+        int customerId = 0;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from watch.\"order\" ORDER BY id DESC LIMIT 1");
+            while (resultSet.next()) {
+                amount = resultSet.getDouble("amount");
+                customerId = resultSet.getInt("customer_id");
+            }
+            statement.close();
+
+            PreparedStatement statementUpd = connection.prepareStatement("UPDATE watch.customer " +
+                    "SET total_sum = (SELECT total_sum + ? FROM watch.customer WHERE id = ?) WHERE id = ?");
+            statementUpd.setDouble(1, amount);
+            statementUpd.setInt(2, customerId);
+            statementUpd.setInt(3, customerId);
+            statementUpd.executeUpdate();
+            statementUpd.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

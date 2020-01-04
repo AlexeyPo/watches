@@ -22,6 +22,7 @@ public class TrademarkDAO {
                 String title = resultSet.getString("title");
                 trademarks.add(new Trademark(title));
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

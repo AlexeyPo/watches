@@ -20,6 +20,7 @@ public class CountryDAO {
                 String name = resultSet.getString("name");
                 countries.add(new Country(id, name));
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

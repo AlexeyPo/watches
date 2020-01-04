@@ -21,6 +21,7 @@ public class VendorDAO {
                 String title = resultSet.getString("title");
                 vendors.add(new Vendor(id, title));
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package dao;
 
+import com.sun.org.apache.bcel.internal.generic.DMUL;
 import model.*;
 
 import java.lang.reflect.Type;
@@ -41,12 +42,50 @@ public class OrderDAO {
                         new Item(model, price),
                         new Trademark(trademark),
                         new WatchType(watchType)));
-
-
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return orders;
+    }
+
+    public void addNewOrder(int cardNumber, String model, int quantityInOrder) {
+        double price = 0;
+        double discount = 0;
+        double amount = 0;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT price FROM watch.item WHERE model = ?");
+            statement.setString(1, model);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                price = resultSet.getDouble("price");
+            }
+            statement.close();
+
+            PreparedStatement statement1 = connection.prepareStatement("SELECT personal_discount " +
+                    "FROM watch.customer WHERE card_number = ?");
+            statement1.setInt(1, cardNumber);
+            ResultSet resultSet1 = statement1.executeQuery();
+            while (resultSet1.next()) {
+                discount = resultSet1.getDouble("personal_discount");
+            }
+            statement1.close();
+
+            amount = (price * quantityInOrder) - (price * quantityInOrder * (discount / 100));
+
+            PreparedStatement statementIns = connection.prepareStatement("" +
+                    "INSERT INTO watch.\"order\"(date_time, amount, customer_id, item_id, quantity_in_order) VALUES " +
+                    "(CURRENT_TIMESTAMP, ?, (SELECT id FROM watch.customer WHERE card_number = ?), " +
+                    "(SELECT id FROM watch.item WHERE model = ?), ?)");
+            statementIns.setDouble(1, amount);
+            statementIns.setInt(2, cardNumber);
+            statementIns.setString(3, model);
+            statementIns.setInt(4, quantityInOrder);
+            statementIns.executeUpdate();
+            statementIns.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
