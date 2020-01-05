@@ -18,7 +18,7 @@ public class OrderMenu implements AppMenu {
 
     @Override
     public void returnPointMenu(int selection) {
-        if (selection == ADD_NEW){
+        if (selection == ADD_NEW) {
             ordersManager.addNewOrder();
         }
     }

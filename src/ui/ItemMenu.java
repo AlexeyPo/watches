@@ -6,7 +6,7 @@ import static ui.MainMenu.*;
 
 public class ItemMenu implements AppMenu {
 
-private ItemsManager itemsManager = new ItemsManager();
+    private ItemsManager itemsManager = new ItemsManager();
 
     @Override
     public void printMenu() {

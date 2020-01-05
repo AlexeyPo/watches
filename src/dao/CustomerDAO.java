@@ -38,14 +38,13 @@ public class CustomerDAO {
 
     public void addNewCustomer(Customer customer) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO watch.customer(name, total_sum, " +
+            PreparedStatement statement = connection.prepareStatement("insert into watch.customer(name, total_sum, " +
                     "card_number, personal_discount) VALUES (?, ?, ?, ?)");
             statement.setString(1, customer.getName());
             statement.setDouble(2, customer.getTotalSum());
             statement.setInt(3, customer.getCardNumber());
             statement.setDouble(4, customer.getPersonalDiscount());
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,7 +78,7 @@ public class CustomerDAO {
 
     public boolean customerIsAvailable(int cardNumber) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM watch.customer " +
+            PreparedStatement statement = connection.prepareStatement("SELECT card_number FROM watch.customer " +
                     "WHERE card_number = ?");
             statement.setInt(1, cardNumber);
             ResultSet resultSet = statement.executeQuery();
@@ -96,7 +95,7 @@ public class CustomerDAO {
 
     public boolean findCustomerById(int id) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM watch.customer " +
+            PreparedStatement statement = connection.prepareStatement("SELECT id FROM watch.customer " +
                     "WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -147,7 +146,8 @@ public class CustomerDAO {
         int customerId = 0;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * from watch.\"order\" ORDER BY id DESC LIMIT 1");
+            ResultSet resultSet = statement.executeQuery("SELECT amount, customer_id " +
+                    "FROM watch.\"order\" ORDER BY id DESC LIMIT 1");
             while (resultSet.next()) {
                 amount = resultSet.getDouble("amount");
                 customerId = resultSet.getInt("customer_id");

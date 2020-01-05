@@ -12,15 +12,6 @@ public class Order {
     private Trademark trademark;
     private WatchType watchType;
 
-    public Order(int id, LocalDateTime dateTime, double amount, Customer customer, Item item, int quantityInOrder) {
-        this.id = id;
-        this.dateTime = dateTime;
-        this.amount = amount;
-        this.customer = customer;
-        this.item = item;
-        this.quantityInOrder = quantityInOrder;
-    }
-
     public Order(LocalDateTime dateTime, double amount, int quantityInOrder, Customer customer, Item item, Trademark trademark, WatchType watchType) {
         this.dateTime=dateTime;
         this.amount=amount;

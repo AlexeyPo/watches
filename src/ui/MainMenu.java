@@ -22,7 +22,6 @@ public class MainMenu implements AppMenu {
     private OrdersManager ordersManager = new OrdersManager();
     private ReportsManager reportsManager = new ReportsManager();
 
-
     @Override
     public void printMenu() {
         System.out.println("============ Main Menu ==========");

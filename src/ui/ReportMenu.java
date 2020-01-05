@@ -6,6 +6,11 @@ public class ReportMenu implements AppMenu {
 
     private ReportsManager reportsManager = new ReportsManager();
 
+    public static final int FIRST_REPORT = 1;
+    public static final int SECOND_REPORT = 2;
+    public static final int THIRD_REPORT = 3;
+    public static final int FOURTH_REPORT = 4;
+
     @Override
     public void printMenu() {
         System.out.println("========== Report Menu ==========");
@@ -19,20 +24,19 @@ public class ReportMenu implements AppMenu {
 
     @Override
     public void returnPointMenu(int selection) {
-        switch (selection){
-            case 1:
+        switch (selection) {
+            case FIRST_REPORT:
                 reportsManager.showTrademarkByWatchType();
                 break;
-            case 2:
+            case SECOND_REPORT:
                 reportsManager.showWatchByPrice();
                 break;
-            case 3:
+            case THIRD_REPORT:
                 reportsManager.showTrademarkByCountry();
                 break;
-            case 4:
+            case FOURTH_REPORT:
                 reportsManager.showVendorByTotalAmount();
                 break;
         }
-
     }
 }

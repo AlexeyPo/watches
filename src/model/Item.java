@@ -9,15 +9,6 @@ public class Item {
     private Trademark trademark;
     private WatchType watchType;
 
-    public Item(int id, String model, double price, int quantity, Trademark trademark, WatchType watchType) {
-        this.id = id;
-        this.model = model;
-        this.price = price;
-        this.quantity = quantity;
-        this.trademark = trademark;
-        this.watchType = watchType;
-    }
-
     public Item(String model, double price, int quantity, Trademark trademark, WatchType watchType) {
         this.model = model;
         this.price = price;

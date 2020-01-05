@@ -1,9 +1,7 @@
 package dao;
 
-import com.sun.org.apache.bcel.internal.generic.DMUL;
 import model.*;
 
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,7 +51,7 @@ public class OrderDAO {
     public void addNewOrder(int cardNumber, String model, int quantityInOrder) {
         double price = 0;
         double discount = 0;
-        double amount = 0;
+        double amount;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement("SELECT price FROM watch.item WHERE model = ?");
             statement.setString(1, model);

@@ -14,7 +14,7 @@ public class CountryDAO {
         List<Country> countries = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM watch.country");
+            ResultSet resultSet = statement.executeQuery("SELECT id, name FROM watch.country");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -25,5 +25,22 @@ public class CountryDAO {
             e.printStackTrace();
         }
         return countries;
+    }
+
+    public boolean countryIsAvailable(String country) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT name FROM watch.country " +
+                    "WHERE name = ?");
+            statement.setString(1, country);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                resultSet.getString("name");
+                statement.close();
+                return true;
+            } else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

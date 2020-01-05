@@ -1,17 +1,16 @@
-package model;
+package ui;
 
-public class Vendor {
+import model.Vendor;
+
+public class Trademark {
     private int id;
     private String title;
-    private Country country;
+    private Vendor vendor;
 
-    public Vendor(int id, String title) {
+    public Trademark(int id, String title, Vendor vendor) {
         this.id = id;
         this.title = title;
-    }
-
-    public Vendor(String title) {
-        this.title = title;
+        this.vendor = vendor;
     }
 
     public int getId() {
@@ -30,20 +29,20 @@ public class Vendor {
         this.title = title;
     }
 
-    public Country getCountry() {
-        return country;
+    public Vendor getVendor() {
+        return vendor;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 
     @Override
     public String toString() {
-        return "Vendor{" +
+        return "Trademark{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", country=" + country +
+                ", vendor=" + vendor +
                 '}';
     }
 }

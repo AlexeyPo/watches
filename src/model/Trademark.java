@@ -5,12 +5,6 @@ public class Trademark {
     private String title;
     private Vendor vendor;
 
-    public Trademark(int id, String title, Vendor vendor) {
-        this.id = id;
-        this.title = title;
-        this.vendor = vendor;
-    }
-
     public Trademark(int id) {
         this.id = id;
     }

@@ -4,17 +4,12 @@ public class WatchType {
     private int id;
     private String title;
 
-    public WatchType(int id, String title) {
-        this.id = id;
+    public WatchType(String title) {
         this.title = title;
     }
 
-    public WatchType(String title) {
-        this.title=title;
-    }
-
     public WatchType(int id) {
-        this.id=id;
+        this.id = id;
     }
 
     public int getId() {

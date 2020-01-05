@@ -50,7 +50,6 @@ public class ItemDAO {
         }
     }
 
-
     public void editItem(String model, int watchType, double price) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement("UPDATE watch.item SET watch_type_id = ?, " +
@@ -65,16 +64,16 @@ public class ItemDAO {
         }
     }
 
-    public boolean itemIsAvailable(String model){
+    public boolean itemIsAvailable(String model) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement("SELECT id FROM watch.item WHERE model=?");
             statement.setString(1, model);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 resultSet.getInt("id");
                 statement.close();
                 return true;
-            }else {
+            } else {
                 return false;
             }
 
@@ -82,5 +81,28 @@ public class ItemDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<Item> showWatchByPrice(double price) {
+        List<Item> items = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT item.*, trademark.title AS trademark_title, " +
+                    "watch_type.title AS type_title FROM watch.item CROSS JOIN watch.trademark CROSS JOIN watch.watch_type " +
+                    "WHERE trademark_id=trademark.id AND watch_type_id=watch_type.id AND watch_type.id = 2 AND price <= ?");
+            statement.setDouble(1, price);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String model = resultSet.getString("model");
+                price = resultSet.getDouble("price");
+                int quantity = resultSet.getInt("quantity");
+                String trademark = resultSet.getString("trademark_title");
+                String watchType = resultSet.getString("type_title");
+                items.add(new Item(model, price, quantity, new Trademark(trademark), new WatchType(watchType)));
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 }
