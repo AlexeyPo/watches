@@ -52,7 +52,7 @@ public class ReportsManager {
 
     public void showTrademarkByCountry() {
         System.out.println("Please enter country for filter: ");
-        String country = scanner.next();
+        String country = scanner.nextLine();
 
         if (countryDAO.countryIsAvailable(country)) {
             showReports();

@@ -25,7 +25,7 @@ public class ItemsManager {
     public void addNewItem() {
 
         System.out.println("Please, enter watch model: ");
-        String model = scanner.next();
+        String model = scanner.nextLine();
 
         if (!itemDAO.itemIsAvailable(model)) {
             System.out.println("Please, enter price: ");
@@ -52,7 +52,7 @@ public class ItemsManager {
 
     public void editItem() {
         System.out.println("Please, enter Item's model for changing: ");
-        String model = scanner.next();
+        String model = scanner.nextLine();
 
         if (itemDAO.itemIsAvailable(model)) {
             System.out.println("Please, enter Item's new Watch Type ID: ");

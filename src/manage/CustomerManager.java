@@ -27,7 +27,7 @@ public class CustomerManager {
 
         if (!customerDAO.customerIsAvailable(cardNumber)) {
             System.out.println("Please, enter new Customer's Second Name: ");
-            String name = scanner.next();
+            String name = scanner.nextLine();
 
             System.out.println("Please, enter new Customer's sum: ");
             double sum = scanner.nextDouble();
@@ -54,7 +54,7 @@ public class CustomerManager {
         if (customerDAO.findCustomerById(id)) {
 
             System.out.println("Please, enter Customer's new Second Name: ");
-            String name = scanner.next().trim();
+            String name = scanner.nextLine().trim();
 
             System.out.println("Please, enter Customer's new sum: ");
             double sum = scanner.nextDouble();
