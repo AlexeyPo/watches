@@ -6,13 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dao.VendorDAO.*;
-
 public class CountryDAO {
 
     public List<Country> showListOfCountries() {
         List<Country> countries = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT id, name FROM watch.country");
             while (resultSet.next()) {
@@ -28,7 +26,7 @@ public class CountryDAO {
     }
 
     public boolean countryIsAvailable(String country) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT name FROM watch.country " +
                     "WHERE name = ?");
             statement.setString(1, country);

@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VendorDAO {
-    static final String URL = "jdbc:postgresql://localhost:5432/watch";
-    static final String USER = "postgres";
-    static final String PASSWORD = "postgres";
 
     public List<Vendor> showListOfVendors() {
         List<Vendor> vendors = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT id, title FROM watch.vendor");
             while (resultSet.next()) {
@@ -30,7 +27,7 @@ public class VendorDAO {
 
     public List<Vendor> showVendorByTotalAmount(double amount) {
         List<Vendor> vendors = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT SUM(\"order\".amount) AS sum, watch.vendor.title " +
                     "FROM watch.\"order\" JOIN watch.item ON \"order\".item_id = item.id " +
                     "JOIN watch.trademark ON item.trademark_id = trademark.id " +

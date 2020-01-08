@@ -8,13 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dao.VendorDAO.*;
-
 public class ItemDAO {
 
     public List<Item> showListOfItems() {
         List<Item> items = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT item.*, trademark.title AS trademark_title, " +
                     "watch_type.title AS type_title FROM watch.item CROSS JOIN watch.trademark CROSS JOIN watch.watch_type " +
@@ -35,7 +33,7 @@ public class ItemDAO {
     }
 
     public void addNewItem(Item item) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO watch.item(model, price, quantity, " +
                     "trademark_id, watch_type_id) VALUES (?, ?, ?, ?, ?)");
             statement.setString(1, item.getModel());
@@ -51,7 +49,7 @@ public class ItemDAO {
     }
 
     public void editItem(String model, int watchType, double price) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE watch.item SET watch_type_id = ?, " +
                     "price = ? WHERE model = ?");
             statement.setInt(1, watchType);
@@ -65,7 +63,7 @@ public class ItemDAO {
     }
 
     public boolean itemIsAvailable(String model) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT id FROM watch.item WHERE model=?");
             statement.setString(1, model);
             ResultSet resultSet = statement.executeQuery();
@@ -85,7 +83,7 @@ public class ItemDAO {
 
     public List<Item> showWatchByPrice(double price) {
         List<Item> items = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT item.*, trademark.title AS trademark_title, " +
                     "watch_type.title AS type_title FROM watch.item CROSS JOIN watch.trademark CROSS JOIN watch.watch_type " +
                     "WHERE trademark_id=trademark.id AND watch_type_id=watch_type.id AND watch_type.id = 2 AND price <= ?");

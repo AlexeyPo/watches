@@ -7,13 +7,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dao.VendorDAO.*;
-
 public class OrderDAO {
 
     public List<Order> showListOfOrders() {
         List<Order> orders = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT \"order\".date_time, \"order\".amount, " +
                     "\"order\".quantity_in_order, customer.name, customer.card_number, customer.personal_discount, " +
@@ -52,7 +50,7 @@ public class OrderDAO {
         double price = 0;
         double discount = 0;
         double amount;
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT price FROM watch.item WHERE model = ?");
             statement.setString(1, model);
             ResultSet resultSet = statement.executeQuery();

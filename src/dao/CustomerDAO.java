@@ -6,13 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dao.VendorDAO.*;
-
 public class CustomerDAO {
 
     public List<Customer> showListOfCustomers() {
         List<Customer> customers = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM watch.customer");
             while (resultSet.next()) {
@@ -37,7 +35,7 @@ public class CustomerDAO {
     }
 
     public void addNewCustomer(Customer customer) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("insert into watch.customer(name, total_sum, " +
                     "card_number, personal_discount) VALUES (?, ?, ?, ?)");
             statement.setString(1, customer.getName());
@@ -51,7 +49,7 @@ public class CustomerDAO {
     }
 
     public void editCustomer(String name, double sum, double cardNumber, int id) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE watch.customer SET name = ?, " +
                     "total_sum = ?, card_number = ? WHERE id = ?");
             statement.setString(1, name);
@@ -66,7 +64,7 @@ public class CustomerDAO {
     }
 
     public void deleteCustomer(int id) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM watch.customer WHERE id = ?");
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -77,7 +75,7 @@ public class CustomerDAO {
     }
 
     public boolean customerIsAvailable(int cardNumber) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT card_number FROM watch.customer " +
                     "WHERE card_number = ?");
             statement.setInt(1, cardNumber);
@@ -94,7 +92,7 @@ public class CustomerDAO {
     }
 
     public boolean findCustomerById(int id) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT id FROM watch.customer " +
                     "WHERE id = ?");
             statement.setInt(1, id);
@@ -113,7 +111,7 @@ public class CustomerDAO {
     public void checkCustomerDiscount(int cardNumber) {
         int totalSum = 0;
         int discount = 0;
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT total_sum FROM watch.customer " +
                     "WHERE card_number = ?");
             statement.setInt(1, cardNumber);
@@ -144,7 +142,7 @@ public class CustomerDAO {
     public void updateCustomerTotalAmount() {
         double amount = 0;
         int customerId = 0;
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT amount, customer_id " +
                     "FROM watch.\"order\" ORDER BY id DESC LIMIT 1");
