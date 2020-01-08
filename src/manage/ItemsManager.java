@@ -5,6 +5,7 @@ import model.Item;
 import model.Trademark;
 import model.WatchType;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ItemsManager {
@@ -15,7 +16,9 @@ public class ItemsManager {
     public void showItems() {
         System.out.println("------------------------------- Items ---------------------------------");
         System.out.printf("%15s || %10s || %10s || %10s || Available\n", "Model", "Trademark", "Watch Type", "Price");
-        for (Item item : itemDAO.showListOfItems()) {
+        List<Item> items = itemDAO.showListOfItems();
+
+        for (Item item : items) {
             System.out.printf("%15s || %10s || %10s || %10.2f || %2d pcs\n",
                     item.getModel(), item.getTrademark(), item.getWatchType(), item.getPrice(), item.getQuantity());
         }

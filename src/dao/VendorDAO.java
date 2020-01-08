@@ -34,7 +34,7 @@ public class VendorDAO {
                     "JOIN watch.vendor ON trademark.vendor_id = vendor.id WHERE amount <= ? GROUP BY vendor.title");
             statement.setDouble(1, amount);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 String title = resultSet.getString("title");
                 vendors.add(new Vendor(title));
             }

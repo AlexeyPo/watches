@@ -16,7 +16,7 @@ public class TrademarkDAO {
                     " JOIN watch.item ON trademark.id = item.trademark_id AND watch_type_id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 String title = resultSet.getString("title");
                 trademarks.add(new Trademark(title));
             }
@@ -35,7 +35,7 @@ public class TrademarkDAO {
                     "JOIN watch.country ON vendor.country_id = country.id WHERE country.name= ?");
             statement.setString(1, country);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 String title = resultSet.getString("title");
                 trademarks.add(new Trademark(title));
             }

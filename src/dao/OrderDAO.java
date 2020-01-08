@@ -54,7 +54,7 @@ public class OrderDAO {
             PreparedStatement statement = connection.prepareStatement("SELECT price FROM watch.item WHERE model = ?");
             statement.setString(1, model);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 price = resultSet.getDouble("price");
             }
             statement.close();
@@ -63,7 +63,7 @@ public class OrderDAO {
                     "FROM watch.customer WHERE card_number = ?");
             statement1.setInt(1, cardNumber);
             ResultSet resultSet1 = statement1.executeQuery();
-            while (resultSet1.next()) {
+            if (resultSet1.next()) {
                 discount = resultSet1.getDouble("personal_discount");
             }
             statement1.close();

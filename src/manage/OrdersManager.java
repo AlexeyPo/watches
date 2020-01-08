@@ -5,6 +5,7 @@ import dao.ItemDAO;
 import dao.OrderDAO;
 import model.Order;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class OrdersManager {
@@ -20,8 +21,9 @@ public class OrdersManager {
         System.out.printf("%19s || %15s || %7s || %10s || %15s || %10s || %9s || %3s || %8s || %9s\n",
                 "Date and time", "Customer's Name", "Card ID", "Trademark", "Model", "Watch Type", "Price", "Qty",
                 "Discount", "Amount");
+        List<Order> orders = orderDAO.showListOfOrders();
 
-        for (Order order : orderDAO.showListOfOrders()) {
+        for (Order order : orders) {
             System.out.printf("%td.%tm.%tY %tT || %15s || %7d || %10s || %15s || %10s || %9.2f || %3d || %8.1f || %9.2f\n",
                     order.getDateTime(), order.getDateTime(), order.getDateTime(), order.getDateTime(),
                     order.getCustomer().getName(), order.getCustomer().getCardNumber(), order.getTrademark(),

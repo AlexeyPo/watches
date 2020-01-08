@@ -8,6 +8,7 @@ import model.Item;
 import model.Trademark;
 import model.Vendor;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ReportsManager {
@@ -29,8 +30,9 @@ public class ReportsManager {
 
         showReports();
         System.out.printf("%10s\n", "Trademark");
+        List<Trademark> trademarks = trademarkDAO.showTrademarksByWatchType(id);
 
-        for (Trademark trademark : trademarkDAO.showTrademarksByWatchType(id)) {
+        for (Trademark trademark : trademarks) {
             System.out.printf("%10s\n", trademark.getTitle());
         }
         System.out.println("------------------------------------------");
@@ -42,8 +44,9 @@ public class ReportsManager {
 
         showReports();
         System.out.printf("%15s || %10s || %10s || %10s || Available\n", "Model", "Trademark", "Watch Type", "Price");
+        List<Item> items = itemDAO.showWatchByPrice(price);
 
-        for (Item item : itemDAO.showWatchByPrice(price)) {
+        for (Item item : items) {
             System.out.printf("%15s || %10s || %10s || %10.2f || %2d pcs\n",
                     item.getModel(), item.getTrademark(), item.getWatchType(), item.getPrice(), item.getQuantity());
         }
@@ -57,8 +60,9 @@ public class ReportsManager {
         if (countryDAO.countryIsAvailable(country)) {
             showReports();
             System.out.printf("%10s\n", "Trademark");
+            List<Trademark> trademarks = trademarkDAO.showTrademarkByCountry(country);
 
-            for (Trademark trademark : trademarkDAO.showTrademarkByCountry(country)) {
+            for (Trademark trademark : trademarks) {
                 System.out.printf("%10s\n", trademark.getTitle());
             }
             System.out.println("------------------------------------------");
@@ -73,8 +77,9 @@ public class ReportsManager {
 
         showReports();
         System.out.printf("%s\n", "Vendor");
+        List<Vendor> vendors = vendorDAO.showVendorByTotalAmount(amount);
 
-        for (Vendor vendor : vendorDAO.showVendorByTotalAmount(amount)) {
+        for (Vendor vendor : vendors) {
             System.out.printf("%10s\n", vendor.getTitle());
         }
 

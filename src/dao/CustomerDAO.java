@@ -116,7 +116,7 @@ public class CustomerDAO {
                     "WHERE card_number = ?");
             statement.setInt(1, cardNumber);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 totalSum = resultSet.getInt("total_sum");
             }
 
