@@ -39,7 +39,7 @@ public class OrdersManager {
             customerManager.checkCustomerDiscount(cardNumber);
 
             System.out.println("Please, enter the chosen model for adding to order: ");
-            String model = scanner.nextLine();
+            String model = scanner.next();
 
             if (itemDAO.itemIsAvailable(model)) {
                 System.out.println("Please, enter quantity for adding to order: ");
