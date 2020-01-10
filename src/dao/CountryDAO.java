@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDAO {
+    String showListOfCountries = "SELECT id, name FROM watch.country";
+    String countryIsAvailable = "SELECT name FROM watch.country WHERE name = ?";
 
     public List<Country> showListOfCountries() {
         List<Country> countries = new ArrayList<>();
         try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT id, name FROM watch.country");
+            ResultSet resultSet = statement.executeQuery(showListOfCountries);
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -27,8 +29,7 @@ public class CountryDAO {
 
     public boolean countryIsAvailable(String country) {
         try (Connection connection = ConnectorDB.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT name FROM watch.country " +
-                    "WHERE name = ?");
+            PreparedStatement statement = connection.prepareStatement(countryIsAvailable);
             statement.setString(1, country);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
