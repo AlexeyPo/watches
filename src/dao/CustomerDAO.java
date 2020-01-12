@@ -16,7 +16,9 @@ public class CustomerDAO {
     String checkCustomerDiscountSelect = "SELECT total_sum FROM watch.customer WHERE card_number = ?";
     String checkCustomerDiscountUpdate = "UPDATE watch.customer SET personal_discount = ? WHERE card_number = ?";
     String updateCustomerTotalAmountSelect = "SELECT amount, customer_id FROM watch.\"order\" ORDER BY id DESC LIMIT 1";
-    String updateCustomerTotalAmountUpd = "UPDATE watch.customer SET total_sum = (SELECT total_sum + ? FROM watch.customer WHERE id = ?) WHERE id = ?";
+
+    String updateCustomerTotalAmountUpd = "UPDATE watch.customer SET total_sum = (SELECT total_sum + ? FROM watch.customer" +
+                                            " WHERE id = ?) WHERE id = ?";
 
     public List<Customer> showListOfCustomers() {
         List<Customer> customers = new ArrayList<>();

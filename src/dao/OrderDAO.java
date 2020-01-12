@@ -8,20 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO {
+    String showListOfOrders = "SELECT \"order\".date_time, \"order\".amount, \"order\".quantity_in_order, customer.name, " +
+            "customer.card_number, customer.personal_discount, item.model, item.price, trademark.title " +
+            "AS trademark, watch_type.title AS watch_type FROM watch.\"order\" " +
+            "JOIN watch.customer ON \"order\".customer_id = customer.id JOIN watch.item ON \"order\".item_id = item.id " +
+            "JOIN watch.trademark ON item.trademark_id = trademark.id " +
+            "JOIN watch.watch_type ON item.watch_type_id = watch_type.id ORDER BY customer.name";
+
+    String addNewOrderSelectPrice = "SELECT price FROM watch.item WHERE model = ?";
+    String addNewOrderSelectDiscount= "SELECT personal_discount FROM watch.customer WHERE card_number = ?";
+
+    String addNewOrder = "INSERT INTO watch.\"order\"(date_time, amount, customer_id, item_id, quantity_in_order) " +
+            "VALUES (CURRENT_TIMESTAMP, ?, (SELECT id FROM watch.customer WHERE card_number = ?), " +
+            "(SELECT id FROM watch.item WHERE model = ?), ?)";
 
     public List<Order> showListOfOrders() {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectorDB.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT \"order\".date_time, \"order\".amount, " +
-                    "\"order\".quantity_in_order, customer.name, customer.card_number, customer.personal_discount, " +
-                    "item.model, item.price, trademark.title AS trademark, watch_type.title AS watch_type " +
-                    "FROM watch.\"order\" " +
-                    "JOIN watch.customer ON \"order\".customer_id = customer.id " +
-                    "JOIN watch.item ON \"order\".item_id = item.id " +
-                    "JOIN watch.trademark ON item.trademark_id = trademark.id " +
-                    "JOIN watch.watch_type ON item.watch_type_id = watch_type.id " +
-                    "ORDER BY customer.name");
+            ResultSet resultSet = statement.executeQuery(showListOfOrders);
             while (resultSet.next()) {
                 LocalDateTime dateTime = resultSet.getTimestamp("date_time").toLocalDateTime();
                 double amount = resultSet.getDouble("amount");
@@ -50,8 +55,9 @@ public class OrderDAO {
         double price = 0;
         double discount = 0;
         double amount;
+
         try (Connection connection = ConnectorDB.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT price FROM watch.item WHERE model = ?");
+            PreparedStatement statement = connection.prepareStatement(addNewOrderSelectPrice);
             statement.setString(1, model);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -59,8 +65,7 @@ public class OrderDAO {
             }
             statement.close();
 
-            PreparedStatement statement1 = connection.prepareStatement("SELECT personal_discount " +
-                    "FROM watch.customer WHERE card_number = ?");
+            PreparedStatement statement1 = connection.prepareStatement(addNewOrderSelectDiscount);
             statement1.setInt(1, cardNumber);
             ResultSet resultSet1 = statement1.executeQuery();
             if (resultSet1.next()) {
@@ -70,10 +75,7 @@ public class OrderDAO {
 
             amount = (price * quantityInOrder) - (price * quantityInOrder * (discount / 100));
 
-            PreparedStatement statementIns = connection.prepareStatement("" +
-                    "INSERT INTO watch.\"order\"(date_time, amount, customer_id, item_id, quantity_in_order) VALUES " +
-                    "(CURRENT_TIMESTAMP, ?, (SELECT id FROM watch.customer WHERE card_number = ?), " +
-                    "(SELECT id FROM watch.item WHERE model = ?), ?)");
+            PreparedStatement statementIns = connection.prepareStatement(addNewOrder);
             statementIns.setDouble(1, amount);
             statementIns.setInt(2, cardNumber);
             statementIns.setString(3, model);
