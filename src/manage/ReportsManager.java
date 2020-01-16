@@ -32,9 +32,7 @@ public class ReportsManager {
         System.out.printf("%10s\n", "Trademark");
         List<Trademark> trademarks = trademarkDAO.showTrademarksByWatchType(id);
 
-        for (Trademark trademark : trademarks) {
-            System.out.printf("%10s\n", trademark.getTitle());
-        }
+        trademarks.forEach(trademark -> System.out.printf("%10s\n", trademark.getTitle()));
         System.out.println("------------------------------------------");
     }
 
@@ -46,10 +44,8 @@ public class ReportsManager {
         System.out.printf("%15s || %10s || %10s || %10s || Available\n", "Model", "Trademark", "Watch Type", "Price");
         List<Item> items = itemDAO.showWatchByPrice(price);
 
-        for (Item item : items) {
-            System.out.printf("%15s || %10s || %10s || %10.2f || %2d pcs\n",
-                    item.getModel(), item.getTrademark(), item.getWatchType(), item.getPrice(), item.getQuantity());
-        }
+        items.forEach(item -> System.out.printf("%15s || %10s || %10s || %10.2f || %2d pcs\n", item.getModel(),
+                item.getTrademark(), item.getWatchType(), item.getPrice(), item.getQuantity()));
         System.out.println("------------------------------------------");
     }
 
@@ -62,9 +58,7 @@ public class ReportsManager {
             System.out.printf("%10s\n", "Trademark");
             List<Trademark> trademarks = trademarkDAO.showTrademarkByCountry(country);
 
-            for (Trademark trademark : trademarks) {
-                System.out.printf("%10s\n", trademark.getTitle());
-            }
+            trademarks.forEach(trademark -> System.out.printf("%10s\n", trademark.getTitle()));
             System.out.println("------------------------------------------");
         } else {
             System.out.println("Such country was not found!!");
@@ -79,10 +73,7 @@ public class ReportsManager {
         System.out.printf("%s\n", "Vendor");
         List<Vendor> vendors = vendorDAO.showVendorByTotalAmount(amount);
 
-        for (Vendor vendor : vendors) {
-            System.out.printf("%10s\n", vendor.getTitle());
-        }
-
+        vendors.forEach(vendor -> System.out.printf("%10s\n", vendor.getTitle()));
         System.out.println("------------------------------------------");
     }
 }

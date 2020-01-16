@@ -18,10 +18,8 @@ public class ItemsManager {
         System.out.printf("%15s || %10s || %10s || %10s || Available\n", "Model", "Trademark", "Watch Type", "Price");
         List<Item> items = itemDAO.showListOfItems();
 
-        for (Item item : items) {
-            System.out.printf("%15s || %10s || %10s || %10.2f || %2d pcs\n",
-                    item.getModel(), item.getTrademark(), item.getWatchType(), item.getPrice(), item.getQuantity());
-        }
+        items.forEach(item -> System.out.printf("%15s || %10s || %10s || %10.2f || %2d pcs\n", item.getModel(),
+                item.getTrademark(), item.getWatchType(), item.getPrice(), item.getQuantity()));
         System.out.println("-----------------------------------------------------------------------");
     }
 

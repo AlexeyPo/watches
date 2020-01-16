@@ -16,10 +16,8 @@ public class CustomerManager {
         System.out.printf("%2s || %11s || %9s || %17s || %s\n", "id", "Second Name", "total sum", "personal discount", "card ID");
         List<Customer> customers = customerDAO.showListOfCustomers();
 
-        for (Customer customer : customers) {
-            System.out.printf("%2d || %11s || %9.2f || %15.2f %% || %d\n", customer.getId(), customer.getName(),
-                    customer.getTotalSum(), customer.getPersonalDiscount(), customer.getCardNumber());
-        }
+        customers.forEach(customer -> System.out.printf("%2d || %11s || %9.2f || %15.2f %% || %d\n", customer.getId(),
+                customer.getName(), customer.getTotalSum(), customer.getPersonalDiscount(), customer.getCardNumber()));
         System.out.println("---------------------------------");
     }
 

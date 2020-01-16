@@ -13,9 +13,7 @@ public class CountriesManager {
         System.out.println("-------- Countries --------------");
         List<Country> countries = countryDAO.showListOfCountries();
 
-        for (Country country : countries) {
-            System.out.println(country.getId() + " " + country.getName());
-        }
+        countries.forEach(country -> System.out.println(country.getId() + " " + country.getName()));
         System.out.println("---------------------------------");
     }
 }

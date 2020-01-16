@@ -14,9 +14,7 @@ public class VendorsManager {
         System.out.printf("%2s || %s\n", "id", "Vendor title");
         List<Vendor> vendors = vendorDAO.showListOfVendors();
 
-        for (Vendor vendor : vendors) {
-            System.out.printf("%2d || %s\n", vendor.getId(), vendor.getTitle());
-        }
+        vendors.forEach(vendor -> System.out.printf("%2d || %s\n", vendor.getId(), vendor.getTitle()));
         System.out.println("---------------------------------");
     }
 }
